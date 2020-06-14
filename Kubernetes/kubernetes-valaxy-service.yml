@@ -1,10 +1,9 @@
 ---
 - name: create service for deployment
-  hosts: kubernetes
-  become: true
-  user: root
+  hosts: kubernetes-master
+ # become: true
+  user: root #it even works with root user. 
 
   tasks:
   - name: create a service
     command: kubectl apply -f valaxy-service.yml
-

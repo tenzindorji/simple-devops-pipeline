@@ -1,12 +1,13 @@
 ---
-- name: Create pods using deployment 
-  hosts: kubernetes 
-  become: true
-  user: root
- 
-  tasks: 
+- name: Create pods using deployment
+  hosts: kubernetes-master
+ #become: true # due to this parameter, localhost:8080 in master kubernetes was not accessible. So disabled it.
+ #become_method: sudo #not required to run as sudo
+  user: admin
+
+  tasks:
   - name: create a deployment
-    command: kubectl apply -f valaxy-deploy.yml
- 
+    command:  kubectl apply -f valaxy-deploy.yml -v=8
+
   - name: update deployment with new pods if image updated in docker hub
     command: kubectl rollout restart deployment.v1.apps/valaxy-deployment
